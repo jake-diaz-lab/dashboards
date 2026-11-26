@@ -26,7 +26,7 @@
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
   .chips span{background:var(--card);border:1px solid rgba(255,255,255,.14);padding:6px 12px;border-radius:999px;font-size:13px}
   nav{position:sticky;top:0;z-index:10;display:flex;gap:6px;margin:18px -18px 16px;padding:10px 18px;background:rgba(7,7,32,.85);backdrop-filter:blur(10px)}
-  nav button{flex:1;padding:10px 4px;border:0;border-radius:12px;background:var(--card);color:var(--ink);font-size:14px;font-weight:700}
+  nav button{flex:1;padding:10px 2px;border:0;border-radius:12px;background:var(--card);color:var(--ink);font-size:13px;font-weight:700}
   nav button.on{background:var(--hot)}
   section{display:none;animation:in .25s ease}
   section.on{display:block}
@@ -51,6 +51,8 @@
   ol.tl li:before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint)}
   ol.tl b{display:block}
   .score{font-size:56px;font-weight:900;text-align:center;color:var(--gold);text-shadow:0 0 24px rgba(255,200,61,.5)}
+  .shot{margin:0 0 16px}.shot img{width:100%;display:block;border-radius:18px;box-shadow:0 0 0 3px var(--glow),0 0 30px rgba(127,127,255,.4)}.shot figcaption{font-size:13px;color:#b9b6f0;text-align:center;margin-top:8px}
+  #lb{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;z-index:30}#lb.on{display:flex}#lb img{max-width:96vw;max-height:92vh;border-radius:12px}
   #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(80px);background:#fff;color:#111;padding:10px 16px;border-radius:999px;font-weight:700;font-size:14px;transition:.3s;z-index:20;max-width:90vw;text-align:center}
   #toast.show{transform:translateX(-50%)}
   footer{text-align:center;color:#8582c9;font-size:12px;margin-top:26px}
@@ -74,6 +76,7 @@
     <button class="on" data-t="perfil">Perfil</button>
     <button data-t="consulta">Consulta</button>
     <button data-t="stats">Stats</button>
+    <button data-t="fotos">Fotos</button>
   </nav>
 
   <section id="perfil" class="on">
@@ -133,8 +136,15 @@
     </div>
   </section>
 
+  <section id="fotos">
+    <div class="card"><h2>Galería oficial</h2><p style="margin:0">Toca una foto para verla grande.</p></div>
+    <figure class="shot"><img src="sofia.jpg" alt="Sofía con cara de molestia frente a la rueda de la fortuna"><figcaption>Evidencia A: ceño nivel dios.</figcaption></figure>
+    <figure class="shot"><img src="sofia2.jpg" alt="Sofía sonriendo, movida, frente a la rueda de la fortuna"><figcaption>Evidencia B: sonrisa, movimiento y cero enfoque. Paciente en estado de felicidad (borrosa).</figcaption></figure>
+  </section>
+
   <footer>Hecho por Jake 😤 · <span id="d"></span> (CDMX)<br>*La cédula es parte del chiste.</footer>
 </main>
+<div id="lb"><img alt=""></div>
 <div id="toast"></div>
 <script>
   var $=function(s){return document.querySelector(s)},$$=function(s){return document.querySelectorAll(s)};
@@ -166,6 +176,7 @@
   var lv=87,ml=["Sofía suspira.","Sofía frunce más el ceño.","Sofía: «borra esa foto».","Sofía te ve y no dice nada. Peor.","Sofía quiere otra vuelta en la rueda.","Receta nueva: dejar de molestar a la doctora."],mi=0;
   $("#mad").onclick=function(){lv=Math.min(100,lv+3);$("#sc").textContent=lv+"%";$("#mm").style.width=lv+"%";$("#msg").textContent=ml[mi++%ml.length];if(navigator.vibrate)navigator.vibrate(30);if(lv>=100)toast("Nivel máximo. Corre.")};
   var spin=0;$("#ph").onclick=function(){spin+=1;toast(["Eso es la rueda, no a la doctora.","No toques la foto, se enoja.","Último aviso."][spin%3])};
+  $$(".shot img").forEach(function(i){i.onclick=function(){$("#lb img").src=i.src;$("#lb").classList.add("on")}});$("#lb").onclick=function(){this.classList.remove("on")};
   $("#d").textContent="Actualizado "+new Date().toLocaleDateString("es-MX",{timeZone:"America/Mexico_City",day:"numeric",month:"long",year:"numeric"});
 </script>
 </body>
