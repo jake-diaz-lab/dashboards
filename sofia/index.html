@@ -4,62 +4,169 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Sofía — Oficialmente Molesta en la Feria</title>
+<title>Dra. Sofía — Consultorio oficial</title>
 <style>
-  :root{--bg:#0b0b2a;--ink:#f4f1ff;--glow:#7f7fff;--hot:#ff6b3d;--gold:#ffc83d}
-  *{box-sizing:border-box}
-  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#1d1d6b 0%,var(--bg) 60%);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
-  main{max-width:480px;margin:0 auto;padding:20px 18px 48px}
-  .tag{display:inline-block;background:var(--hot);color:#fff;font-weight:700;font-size:12px;letter-spacing:.08em;padding:4px 10px;border-radius:999px;text-transform:uppercase}
-  h1{font-size:44px;line-height:1.05;margin:14px 0 4px;text-shadow:0 0 24px var(--glow)}
-  .sub{color:#c9c6ff;margin:0 0 18px}
-  .photo{width:100%;border-radius:20px;display:block;box-shadow:0 0 0 3px var(--glow),0 0 40px rgba(127,127,255,.5)}
-  .cap{font-size:13px;color:#a9a6e8;text-align:center;margin:8px 0 22px}
-  .card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px 16px;margin:12px 0}
-  .card h2{margin:0 0 6px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
-  .meter{height:12px;border-radius:999px;background:rgba(255,255,255,.15);overflow:hidden;margin-top:8px}
-  .meter i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--hot))}
-  .row{display:flex;justify-content:space-between;gap:10px;font-size:15px}
-  button{width:100%;margin-top:14px;padding:14px;border:0;border-radius:14px;background:var(--hot);color:#fff;font-size:17px;font-weight:700}
-  button:active{transform:scale(.98)}
-  #msg{min-height:1.5em;text-align:center;margin-top:10px;color:var(--gold);font-weight:600}
+  :root{--bg:#070720;--ink:#f4f1ff;--glow:#7f7fff;--hot:#ff6b3d;--gold:#ffc83d;--mint:#4de3c1;--card:rgba(255,255,255,.07)}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5;overflow-x:hidden}
+  body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(900px 500px at 80% -5%,#27279a 0%,transparent 60%),radial-gradient(700px 500px at 0% 40%,#3a1466 0%,transparent 60%),var(--bg)}
+  main{max-width:480px;margin:0 auto;padding:0 18px 56px}
+  .hero{position:relative;margin:0 -18px;height:430px;overflow:hidden}
+  .hero img{width:100%;height:100%;object-fit:cover;object-position:50% 70%;display:block}
+  .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,7,32,0) 40%,var(--bg) 100%)}
+  .badge{position:absolute;top:16px;left:18px;z-index:2;background:var(--mint);color:#04332a;font-weight:800;font-size:12px;letter-spacing:.08em;padding:5px 11px;border-radius:999px;text-transform:uppercase}
+  .pulse{position:absolute;top:16px;right:18px;z-index:2;font-size:13px;background:rgba(0,0,0,.45);padding:5px 10px;border-radius:999px;backdrop-filter:blur(6px)}
+  .pulse b{color:#ff5470;animation:beat 1s infinite;display:inline-block}
+  @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+  .title{margin-top:-70px;position:relative;z-index:3}
+  h1{font-size:46px;line-height:1.02;margin:0;text-shadow:0 0 28px var(--glow)}
+  h1 small{display:block;font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mint);text-shadow:none;margin-bottom:6px}
+  .sub{color:#cfcdff;margin:8px 0 16px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+  .chips span{background:var(--card);border:1px solid rgba(255,255,255,.14);padding:6px 12px;border-radius:999px;font-size:13px}
+  nav{position:sticky;top:0;z-index:10;display:flex;gap:6px;margin:18px -18px 16px;padding:10px 18px;background:rgba(7,7,32,.85);backdrop-filter:blur(10px)}
+  nav button{flex:1;padding:10px 4px;border:0;border-radius:12px;background:var(--card);color:var(--ink);font-size:14px;font-weight:700}
+  nav button.on{background:var(--hot)}
+  section{display:none;animation:in .25s ease}
+  section.on{display:block}
+  @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .card{background:var(--card);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:14px 16px;margin:12px 0}
+  .card h2{margin:0 0 8px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .row{display:flex;justify-content:space-between;gap:10px;font-size:15px;padding:3px 0}
+  .meter{height:12px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden;margin:6px 0 10px}
+  .meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--mint),var(--gold));transition:width 1s cubic-bezier(.2,.8,.2,1)}
+  .meter.hot i{background:linear-gradient(90deg,var(--gold),var(--hot))}
+  .big{width:100%;margin-top:10px;padding:14px;border:0;border-radius:14px;background:var(--hot);color:#fff;font-size:17px;font-weight:800}
+  .big:active{transform:scale(.98)}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .opts button{padding:12px 8px;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:rgba(255,255,255,.06);color:var(--ink);font-size:15px}
+  .opts button.on{background:var(--mint);color:#04332a;font-weight:800;border-color:var(--mint)}
+  .rx{margin-top:12px;padding:14px;border-radius:14px;background:#fffdf5;color:#222;font-family:Georgia,serif;display:none;border-left:6px solid var(--hot)}
+  .rx.show{display:block;animation:in .3s}
+  .rx b{color:#c2410c}
+  .rx small{display:block;margin-top:8px;color:#777;font-family:system-ui}
+  ol.tl{list-style:none;margin:0;padding:0;border-left:2px solid var(--glow)}
+  ol.tl li{padding:2px 0 14px 16px;position:relative}
+  ol.tl li:before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint)}
+  ol.tl b{display:block}
+  .score{font-size:56px;font-weight:900;text-align:center;color:var(--gold);text-shadow:0 0 24px rgba(255,200,61,.5)}
+  #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(80px);background:#fff;color:#111;padding:10px 16px;border-radius:999px;font-weight:700;font-size:14px;transition:.3s;z-index:20;max-width:90vw;text-align:center}
+  #toast.show{transform:translateX(-50%)}
   footer{text-align:center;color:#8582c9;font-size:12px;margin-top:26px}
 </style>
 </head>
 <body>
 <main>
-  <span class="tag">Edición feria · noche</span>
-  <h1>Sofía</h1>
-  <p class="sub">Fan de la rueda de la fortuna. Cero fan de la selfie.</p>
-
-  <img class="photo" src="sofia.jpg" alt="Sofía haciendo cara de molestia frente a una rueda de la fortuna iluminada de noche">
-  <p class="cap">Evidencia A: la cara que pone cuando alguien dice "una foto rápida".</p>
-
-  <div class="card">
-    <h2>Estado actual</h2>
-    <div class="row"><span>Nivel de molestia</span><b>87%</b></div>
-    <div class="meter"><i style="width:87%"></i></div>
-    <div class="row" style="margin-top:12px"><span>Ganas de subirse a la rueda</span><b>100%</b></div>
-    <div class="meter"><i style="width:100%"></i></div>
+  <div class="hero">
+    <img id="ph" src="sofia.jpg" alt="Sofía frente a una rueda de la fortuna iluminada de noche">
+    <span class="badge">Cédula verificada*</span>
+    <span class="pulse"><b>♥</b> <span id="bpm">72</span> lpm</span>
   </div>
 
-  <div class="card">
-    <h2>Datos oficiales</h2>
-    <div class="row"><span>Ubicación</span><b>La feria</b></div>
-    <div class="row"><span>Iluminación</span><b>Azul neón</b></div>
-    <div class="row"><span>Expresión</span><b>Ceño nivel dios</b></div>
-    <div class="row"><span>Aprobó la foto</span><b>No</b></div>
+  <div class="title">
+    <h1><small>Médica · Doctora</small>Dra. Sofía</h1>
+    <p class="sub">Salva vidas de día, juzga fotos de noche. Cara de pocos amigos, corazón de oro (según ella, no).</p>
+    <div class="chips"><span>🩺 Doctora</span><span>🎡 Fan de la rueda</span><span>😤 Ceño certificado</span><span>🌙 Guardia nocturna</span></div>
   </div>
 
-  <button id="b">Hacer enojar a Sofía</button>
-  <div id="msg"></div>
+  <nav>
+    <button class="on" data-t="perfil">Perfil</button>
+    <button data-t="consulta">Consulta</button>
+    <button data-t="stats">Stats</button>
+  </nav>
 
-  <footer>Hecho por Jake 😤 · <span id="d"></span> (Ciudad de México)</footer>
+  <section id="perfil" class="on">
+    <div class="card">
+      <h2>¿Quién es la Dra. Sofía?</h2>
+      <p style="margin:0">Doctora de profesión y de vocación. Se toma la salud en serio y las selfies mucho menos. Diagnostica rápido, opina directo y tiene una expresión facial para cada nivel de gravedad. La de la foto es la de "esto no me lo habías dicho".</p>
+    </div>
+    <div class="card">
+      <h2>¿Qué hace?</h2>
+      <ol class="tl">
+        <li><b>Atiende pacientes</b>Escucha, diagnostica y receta. Sin drama, con datos.</li>
+        <li><b>Resuelve emergencias de amigos</b>"Me duele algo" a las 11 pm = consulta gratis.</li>
+        <li><b>Detecta mentiras en 3 segundos</b>"Sí tomo agua" no cuela.</li>
+        <li><b>Se sube a la rueda de la fortuna</b>Siempre. Es su terapia.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>Superpoderes</h2>
+      <div class="row"><span>Diagnóstico exprés</span><b>95%</b></div><div class="meter"><i data-w="95"></i></div>
+      <div class="row"><span>Paciencia con selfies</span><b>12%</b></div><div class="meter hot"><i data-w="12"></i></div>
+      <div class="row"><span>Sangre fría</span><b>100%</b></div><div class="meter"><i data-w="100"></i></div>
+    </div>
+    <button class="big" id="tap">Tomarle el pulso a la doctora</button>
+  </section>
+
+  <section id="consulta">
+    <div class="card">
+      <h2>Consultorio interactivo</h2>
+      <p style="margin:0 0 10px">¿Qué te pasa? Elige un síntoma y la Dra. Sofía te receta.</p>
+      <div class="opts" id="opts">
+        <button data-k="cruda">🍺 Cruda</button>
+        <button data-k="amor">💔 Mal de amores</button>
+        <button data-k="lunes">😩 Lunes</button>
+        <button data-k="dinero">💸 Cartera vacía</button>
+        <button data-k="selfie">📸 Me tomé selfie</button>
+        <button data-k="duda">🤔 No sé qué comprar</button>
+      </div>
+      <div class="rx" id="rx"></div>
+    </div>
+  </section>
+
+  <section id="stats">
+    <div class="card">
+      <h2>Nivel de molestia ahora</h2>
+      <div class="score" id="sc">87%</div>
+      <div class="meter hot"><i id="mm" data-w="87"></i></div>
+      <button class="big" id="mad">Hacer enojar a la doctora</button>
+      <p id="msg" style="text-align:center;color:var(--gold);font-weight:600;min-height:1.5em;margin:10px 0 0"></p>
+    </div>
+    <div class="card">
+      <h2>Ficha técnica</h2>
+      <div class="row"><span>Profesión</span><b>Doctora</b></div>
+      <div class="row"><span>Lugar favorito</span><b>La feria</b></div>
+      <div class="row"><span>Atracción favorita</span><b>Rueda de la fortuna</b></div>
+      <div class="row"><span>Expresión de la foto</span><b>Ceño nivel dios</b></div>
+      <div class="row"><span>Aprobó la selfie</span><b>No</b></div>
+    </div>
+  </section>
+
+  <footer>Hecho por Jake 😤 · <span id="d"></span> (CDMX)<br>*La cédula es parte del chiste.</footer>
 </main>
+<div id="toast"></div>
 <script>
-  var lines=["Sofía suspira.","Sofía frunce más el ceño.","Sofía: «borra esa foto».","Sofía te ve y no dice nada. Peor.","Modo molesta: 100%.","Sofía quiere otra vuelta en la rueda."];
-  var i=0;document.getElementById('b').onclick=function(){document.getElementById('msg').textContent=lines[i++%lines.length]};
-  document.getElementById('d').textContent="Actualizado "+new Date().toLocaleDateString('es-MX',{timeZone:'America/Mexico_City',day:'numeric',month:'long',year:'numeric'});
+  var $=function(s){return document.querySelector(s)},$$=function(s){return document.querySelectorAll(s)};
+  function grow(root){setTimeout(function(){$$(root+" .meter i[data-w]").forEach(function(e){e.style.width=e.dataset.w+"%"})},60)}
+  grow("#perfil");
+  $$("nav button").forEach(function(b){b.onclick=function(){
+    $$("nav button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");
+    $$("section").forEach(function(s){s.classList.remove("on")});
+    $("#"+b.dataset.t).classList.add("on");grow("#"+b.dataset.t);
+    window.scrollTo({top:$("nav").offsetTop-4,behavior:"smooth"});
+  }});
+  var toastT;function toast(t){var e=$("#toast");e.textContent=t;e.classList.add("show");clearTimeout(toastT);toastT=setTimeout(function(){e.classList.remove("show")},2200)}
+  var bpm=72;setInterval(function(){bpm=Math.max(58,Math.min(110,bpm+Math.round((Math.random()-.5)*4)));$("#bpm").textContent=bpm},1200);
+  var pt=["Pulso normal. La doctora está viva y molesta.","Taquicardia: alguien dijo 'una foto rápida'.","Latido estable. La rueda de la fortuna ayuda.","Presión alta detectada. Causa: tú."],pi=0;
+  $("#tap").onclick=function(){bpm=Math.floor(80+Math.random()*30);$("#bpm").textContent=bpm;toast(pt[pi++%pt.length])};
+  var rx={
+    cruda:["Hidratación, electrolitos y silencio.","Agua, suero oral y cero opiniones hasta el mediodía. Si vuelves a tomar, que sea con testigos."],
+    amor:["Reposo emocional y cero stalkeo.","Bloquear 48 h, salir con amigos y subirse a la rueda de la fortuna. Se repite si es necesario."],
+    lunes:["Café doble y expectativas bajas.","El lunes no tiene cura, solo manejo del dolor. Reiniciar el sábado."],
+    dinero:["Dieta estricta de compras.","Cerrar apps de envíos 7 días. Pronóstico: reservado, pero sobrevivirás."],
+    selfie:["Reflejo de molestia confirmado.","Hacer cara de pocos amigos y subir la foto a internet. Tratamiento ya aplicado."],
+    duda:["Compra la opción más barata que sirva.","Y si de plano no sabes, pregúntale a Jake. Receta válida en toda la república."]
+  };
+  $$("#opts button").forEach(function(b){b.onclick=function(){
+    $$("#opts button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");
+    var r=rx[b.dataset.k],e=$("#rx");e.classList.remove("show");void e.offsetWidth;
+    e.innerHTML="<b>℞ "+r[0]+"</b><br>"+r[1]+"<small>— Dra. Sofía · sin valor oficial, con mucho valor sentimental</small>";e.classList.add("show");
+  }});
+  var lv=87,ml=["Sofía suspira.","Sofía frunce más el ceño.","Sofía: «borra esa foto».","Sofía te ve y no dice nada. Peor.","Sofía quiere otra vuelta en la rueda.","Receta nueva: dejar de molestar a la doctora."],mi=0;
+  $("#mad").onclick=function(){lv=Math.min(100,lv+3);$("#sc").textContent=lv+"%";$("#mm").style.width=lv+"%";$("#msg").textContent=ml[mi++%ml.length];if(navigator.vibrate)navigator.vibrate(30);if(lv>=100)toast("Nivel máximo. Corre.")};
+  var spin=0;$("#ph").onclick=function(){spin+=1;toast(["Eso es la rueda, no a la doctora.","No toques la foto, se enoja.","Último aviso."][spin%3])};
+  $("#d").textContent="Actualizado "+new Date().toLocaleDateString("es-MX",{timeZone:"America/Mexico_City",day:"numeric",month:"long",year:"numeric"});
 </script>
 </body>
 </html>
